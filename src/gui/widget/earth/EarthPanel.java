@@ -4,11 +4,15 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * @author Andrew Bernard
+ */
 public class EarthPanel extends JPanel {
 
   private static final long serialVersionUID = -1108120537851962997L;  
   private SunDisplay sunDisplay;
-  private EarthGrid earth;
+  private EarthGridDisplay earth;
   
   public EarthPanel(Dimension minSize, Dimension maxSize, Dimension prefSize) {
     super();
@@ -17,7 +21,7 @@ public class EarthPanel extends JPanel {
     setMaximumSize(maxSize);
     setPreferredSize(prefSize);
     
-    earth = new EarthGrid();
+    earth = new EarthGridDisplay();
     earth.setAlignmentX(Component.LEFT_ALIGNMENT);
         
     sunDisplay = new SunDisplay(earth.getWidth());
@@ -27,8 +31,14 @@ public class EarthPanel extends JPanel {
     add(earth);
   }
   
+  /**
+   * Draws the grid.
+   * 
+   * @param degreeSeparation the latitude and longitude degree separations 
+   * between the cells in the grid
+   */
   public void drawGrid(int degreeSeparation) {
-    earth.setGridSize(degreeSeparation);
+    earth.setGranularity(degreeSeparation);
     sunDisplay.drawSunPath(earth.getWidth());
     repaint();
   }
@@ -37,7 +47,7 @@ public class EarthPanel extends JPanel {
     return earth.getRadius();
   }
       
-  public void updateGrid(IGrid grid) {
+  public void updateGrid(TemperatureGrid grid) {
     earth.updateGrid(grid);
   }
   
