@@ -1,4 +1,4 @@
-package gui.widget.earth;
+package cs6310.gui.widget.earth;
 
 /**
  * Implement this interface to allow for the retrieval of information 
