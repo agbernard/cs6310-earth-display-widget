@@ -1,4 +1,4 @@
-package gui.widget.earth;
+package cs6310.gui.widget.earth;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -28,7 +28,7 @@ public class SunDisplay extends JPanel {
    * Constructor.
    * @param pathLength the length of the path to draw in pixels
    */
-  public SunDisplay(int pathLength) {
+  SunDisplay(int pathLength) {
     init(pathLength);
   }
   
@@ -37,7 +37,7 @@ public class SunDisplay extends JPanel {
    * @param pathLength the length of the path to draw in pixels
    * @param initialSunPos the initial position of the sun in degrees
    */
-  public SunDisplay(int pathLength, float initialSunPos) {
+  SunDisplay(int pathLength, float initialSunPos) {
     this.initialSunPos = initialSunPos;
     init(pathLength);
   }
@@ -52,7 +52,7 @@ public class SunDisplay extends JPanel {
    * 
    * @param pathLength in pixels
    */
-  public void drawSunPath(int pathLength) {
+  void drawSunPath(int pathLength) {
     this.pathLength = pathLength;
     pixelsPerDegree = pathLength / 360f;    
     
@@ -79,7 +79,7 @@ public class SunDisplay extends JPanel {
    * 
    * @param degrees the number of degrees to move the sun
    */
-  public void moveSunPosition(float degrees) {
+  void moveSunPosition(float degrees) {
     degreePosition -= degrees;
     if(degreePosition < 0) {
       degreePosition += 360;
@@ -92,7 +92,7 @@ public class SunDisplay extends JPanel {
   /**
    * Resets the sun to its default position.
    */
-  public void reset() {
+  void reset() {
     degreePosition = 0f;
     pixelPosition = 0;
     moveSunPosition(this.initialSunPos);

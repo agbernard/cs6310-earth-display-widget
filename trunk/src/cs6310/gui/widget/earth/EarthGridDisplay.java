@@ -1,4 +1,4 @@
-package gui.widget.earth;
+package cs6310.gui.widget.earth;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,16 +9,16 @@ import javax.swing.JPanel;
 
 /**
  * Use this class to display an image of the earth with a grid drawn on top. All the methods that could
- * be used to update the grid are given package level access - these methods should interacted with 
+ * be used to update the grid are given package level access - these methods should be interacted with 
  * from the {@link EarthPanel}.
  * 
  * @author Andrew Bernard
  */
 public class EarthGridDisplay extends JPanel {
   private static final long serialVersionUID = -1108120968981962997L;
-  private static final float OPACITY = 0.65f;
-  private static final int DEFAULT_GRID_SPACING = 15; //degrees
+  private static final float OPACITY = 0.65f;  
   private static final int DEFAULT_CELL_TEMP = 15; //degrees in celsius
+  private TemperatureColorPicker colorPicker = TemperatureColorPicker.getInstance();
   
   private BufferedImage imgTransparent;
   private BufferedImage earthImage;
@@ -35,9 +35,14 @@ public class EarthGridDisplay extends JPanel {
   private boolean paintInitialColors = true;
   private TemperatureGrid grid;
   
-  public EarthGridDisplay() {
+  /**
+   * Constructs a display grid with a default grid spacing.
+   * 
+   * @param defaultGridPacing in degrees
+   */
+  EarthGridDisplay(int defaultGridPacing) {
     earthImage = new EarthImage().getBufferedImage();    
-    setGranularity(DEFAULT_GRID_SPACING);
+    setGranularity(defaultGridPacing);
     setIgnoreRepaint(true);
   }
   
@@ -76,7 +81,7 @@ public class EarthGridDisplay extends JPanel {
   }
   
   private void initCellColors(Graphics g) {
-    g.setColor(colorPicker(DEFAULT_CELL_TEMP));
+    g.setColor(colorPicker.getColor(DEFAULT_CELL_TEMP));
     g.fillRect(0, 0, imgWidth, imgHeight);
   }
   
@@ -117,7 +122,7 @@ public class EarthGridDisplay extends JPanel {
         int colorValue = new Double(newTemp).intValue();
         int cellHeight = (int)grid.getCellHeight(x, y);
         
-        g.setColor(colorPicker(colorValue));
+        g.setColor(colorPicker.getColor(colorValue));
         g.fillRect(cellX, cellY, cellWidth, cellHeight);
         cellY += cellHeight;
 //        System.out.print("\n["+x+", "+y+"] color: " + colorValue);
@@ -165,68 +170,6 @@ public class EarthGridDisplay extends JPanel {
 
   void reset() {
     paintInitialColors = true;
-  }
-  
-  private Color colorPicker(int v) {
-    int b = 0;
-		int g = 0;
-		int r = 0;
-
-		if (v <= -100) {
-			b = 170;
-			g = 100;
-			r = 170;
-		}
-		else if (v <= -46) {
-			v = -1 * v;
-			b = 255;
-			g = 145 - (v * 10) % 115;
-			r = 255;
-		}
-		else if (v <= -23 && v > -46) {
-			v = -1 * v;
-			b = 255;
-			g = 145;
-			r = 145 + (v * 5) % 115;
-		}
-		else if (v < 0 && v > -23) {
-			v = -1 * v;
-			b = 255;
-			g = 145;
-			r = 145 - (v * 5);
-		}
-		else if (v == 0) {
-			b = 225;
-			g = 145;
-			r = 145;
-		}
-		else if (v > 0 && v < 23) {
-			b = 255;
-			g = 145 + (v * 5);
-			r = 145;
-		}
-		else if (v >= 23 && v < 46) {
-
-			b = 255 - (v * 5) % 115;
-			g = 255;
-			r = 145;
-		}
-		else if (v >= 46 && v < 69) {
-			b = 145;
-			g = 255;
-			r = 145 + (v * 5) % 115;
-		}
-		else if (v >= 69 && v < 92) {
-			b = 145;
-			g = 255 - (v * 5) % 115;
-			r = 255;
-		}
-		else {
-			b = 145 - (v * 10) % 115;
-			g = 145 - (v * 10) % 115;
-			r = 255;
-		}
-		return new Color(r, g, b);
   }
   
 }
