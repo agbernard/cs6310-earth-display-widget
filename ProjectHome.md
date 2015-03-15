@@ -1,0 +1,1 @@
+For CS6310, this is a widget displaying the earth that can be used to model heat dispersion following the sun's path.
